@@ -34,7 +34,7 @@ Shopify.Context.initialize({
   SCOPES: process.env.SCOPES.split(","),
   HOST_NAME: process.env.HOST.replace(/https?:\/\//, ""),
   HOST_SCHEME: process.env.HOST.split("://")[0],
-  API_VERSION: ApiVersion.April22,
+  API_VERSION: "2022-07",
   IS_EMBEDDED_APP: true,
   // This should be replaced with your preferred storage strategy
   SESSION_STORAGE: new Shopify.Session.SQLiteSessionStorage(DB_PATH),
@@ -117,7 +117,6 @@ export async function createServer(
   });
 
   app.post("/api/graphql", async (req, res) => {
-    console.log(req.body)
     try {
       const response = await Shopify.Utils.graphqlProxy(req, res);
       res.status(200).send(response.body);
