@@ -14,8 +14,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 fn function(input: input::Input) -> Result<FunctionResult, Box<dyn std::error::Error>> {
     let config: input::Configuration = input.configuration();
     let cart_lines = input.cart.lines;
-    let rise_attribute = input.cart.attribute.unwrap().value;
-    // println!("HELLO =================== {:?}", rise_attribute);
+    let rise_attribute = input.cart.attribute.value;
+
+    println!("HELLO =================== {:?}", rise_attribute);
     if cart_lines.is_empty() || config.percentage == 0.0 {
         return Ok(FunctionResult {
             discounts: vec![],
@@ -43,7 +44,7 @@ fn function(input: input::Input) -> Result<FunctionResult, Box<dyn std::error::E
     Ok(FunctionResult {
         discounts: vec![Discount {
             // message: std::option::Option::Some("ELADKING".to_string()),
-            message: Some(rise_attribute),
+            message: rise_attribute,
             conditions: None,
             targets,
             value: Value::Percentage(Percentage { value: config.percentage }),
