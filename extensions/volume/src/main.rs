@@ -14,9 +14,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 fn function(input: input::Input) -> Result<FunctionResult, Box<dyn std::error::Error>> {
     let config: input::Configuration = input.configuration();
     let cart_lines = input.cart.lines;
-    let rise_attribute = input.cart.attribute.value;
-
-    println!("HELLO =================== {:?}", rise_attribute);
+    let rise_attribute = if input.cart.attribute.is_none() { "".to_string() } else { input.cart.attribute.unwrap().value};
+    // println!("HELLO =================== {:?}", rise_attribute);
     if cart_lines.is_empty() || config.percentage == 0.0 {
         return Ok(FunctionResult {
             discounts: vec![],
@@ -43,8 +42,7 @@ fn function(input: input::Input) -> Result<FunctionResult, Box<dyn std::error::E
 
     Ok(FunctionResult {
         discounts: vec![Discount {
-            // message: std::option::Option::Some("ELADKING".to_string()),
-            message: rise_attribute,
+            message: Some(rise_attribute),
             conditions: None,
             targets,
             value: Value::Percentage(Percentage { value: config.percentage }),
@@ -57,7 +55,7 @@ fn function(input: input::Input) -> Result<FunctionResult, Box<dyn std::error::E
 mod tests {
     use super::*;
 
-    fn input(configuration: Option<input::Configuration>) -> input::Input {
+    fn input_with_cart_attributes(configuration: Option<input::Configuration>) -> input::Input {
         let input = r#"
         {
             "cart": {
@@ -65,6 +63,43 @@ mod tests {
                     "key": "rise_loyalty_code",
                     "value": "ELADKING"
                 },
+                "lines": [
+                    {
+                        "quantity": 5,
+                        "merchandise": {
+                            "id": "gid://shopify/ProductVariant/0"
+                        }
+                    },
+                    {
+                        "quantity": 1,
+                        "merchandise": {
+                            "id": "gid://shopify/ProductVariant/1"
+                        }
+                    }
+                ]
+            },
+            "discountNode": { "metafield": null }
+        }
+        "#;
+        let default_input: input::Input = serde_json::from_str(input).unwrap();
+        let value = configuration.map(|x| serde_json::to_string(&x).unwrap());
+
+        let discount_node = input::DiscountNode {
+            metafield: Some(input::Metafield {
+                value
+            }),
+        };
+
+        input::Input {
+            discount_node,
+            ..default_input
+        }
+    }
+    fn input(configuration: Option<input::Configuration>) -> input::Input {
+        let input = r#"
+        {
+            "attribute": null,
+            "cart": {
                 "lines": [
                     {
                         "quantity": 5,
@@ -121,6 +156,35 @@ mod tests {
     #[test]
     fn test_discount_with_configuration() {
         let input = input(Some(input::Configuration {
+            quantity: 5,
+            percentage: 10.0,
+        }));
+        let handle_result = serde_json::json!(function(input).unwrap());
+
+        let expected_json = r#"
+            {
+                "discounts": [{
+                    "message": "",
+                    "targets": [
+                        { "productVariant": { "id": "gid://shopify/ProductVariant/0" } }
+                    ],
+                    "value": { "percentage": { "value": 10.0 } }
+                }],
+                "discountApplicationStrategy": "FIRST"
+            }
+        "#;
+
+        let expected_handle_result: serde_json::Value =
+            serde_json::from_str(expected_json).unwrap();
+        assert_eq!(
+            handle_result.to_string(),
+            expected_handle_result.to_string()
+        );
+    }
+
+    #[test]
+    fn test_discount_with_configuration_with_cart_attributes() {
+        let input = input_with_cart_attributes(Some(input::Configuration {
             quantity: 5,
             percentage: 10.0,
         }));

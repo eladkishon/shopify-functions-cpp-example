@@ -1,6 +1,7 @@
 query Input {
   cart {
     attribute(key: "rise_loyalty_code") {
+      key
       value
     }
     lines {
