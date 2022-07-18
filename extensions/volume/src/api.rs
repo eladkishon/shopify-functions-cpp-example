@@ -63,12 +63,19 @@ pub mod input {
     #[derive(Clone, Debug, Deserialize)]
     pub struct Cart {
         pub lines: Vec<CartLine>,
+        pub attribute: Option<Attribute>,
     }
 
     #[derive(Clone, Debug, Deserialize)]
     pub struct CartLine {
         pub quantity: Int,
         pub merchandise: Merchandise,
+    }
+
+    #[derive(Clone, Debug, Deserialize)]
+    pub struct Attribute {
+        pub value: String,
+        pub key: String,
     }
 
     #[derive(Clone, Debug, Deserialize)]
