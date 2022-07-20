@@ -1,6 +1,20 @@
 query Input {
+  cart {
+    attribute(key: "rise_loyalty_code") {
+      key
+      value
+    }
+    lines {
+      quantity
+      merchandise {
+        ...on ProductVariant {
+          id
+        }
+      }
+    }
+  }
   discountNode {
-    metafield(namespace: "default", key: "function-configuration") {
+    metafield(namespace: "discounts-plus", key: "volume-config") {
       value
     }
   }

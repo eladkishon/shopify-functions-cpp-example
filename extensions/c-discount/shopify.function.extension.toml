@@ -1,10 +1,12 @@
 name = "c-discount"
-type = "order_discounts"
+type = "product_discounts"
 api_version = "2022-07"
 
 [build]
-command = "echo 'build the wasm'"
+command = "em++ -std=c++1z src/main.cpp -o build/main.js"
+path = 'build/main.wasm'
 
 [ui.paths]
-create = "/"
-details = "/"
+create = "/volume/new"
+details = "/volume/:id" # Note that this isn't implemented in this tutorial
+
