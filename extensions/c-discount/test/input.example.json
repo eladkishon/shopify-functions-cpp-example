@@ -1,0 +1,30 @@
+{
+    "name": "elad",
+    "cart": {
+        "id": "elad",
+        "attribute": {
+            "id": "2",
+            "key": "rise_loyalty_code",
+            "value": "ELADKING"
+        },
+        "lines": [
+            {
+                "quantity": 5,
+                "merchandise": {
+                    "id": "gid://shopify/ProductVariant/0"
+                }
+            },
+            {
+                "quantity": 1,
+                "merchandise": {
+                    "id": "gid://shopify/ProductVariant/1"
+                }
+            }
+        ]
+    },
+    "discountNode": {
+        "metafield": {
+            "value": "elad"
+        }
+    }
+}
