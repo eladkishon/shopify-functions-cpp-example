@@ -1,1 +1,21 @@
-{"discounts":[{"value":{"fixedAmount":{"applies_to_each_item":true,"value":10.0}},"message":"ELADKING"}],"discount_application_strategy":"FIRST"}
+{
+    "discounts": [
+        {
+            "value": {
+                "percentage": {
+                    "value": 10.0
+                }
+            },
+            "message": "ELADKING",
+            "targets": [
+                {
+                    "productVariant": {
+                        "id": "gid://shopify/ProductVariant/0",
+                        "quantity": 5
+                    }
+                }
+            ]
+        }
+    ],
+    "discountApplicationStrategy": "FIRST"
+}
