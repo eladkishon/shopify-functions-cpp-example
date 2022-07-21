@@ -7,7 +7,6 @@ FunctionResult function(Input input) {
   DiscountConfig discountConfig = input.config();
   
   // calculate discounts
-
   if (input.cart.lines.empty()) {
     result.discountApplicationStrategy = DiscountApplicationStrategy::FIRST;
     return result;
@@ -29,11 +28,10 @@ FunctionResult function(Input input) {
     return result;
   }
 
-
   result.discounts.push_back(Discount{
     Value{std::nullopt, Percentage{10.0}},
     targets,
-    input.cart.attribute.value,
+    input.cart.attribute.value().value,
     std::nullopt
   });
 

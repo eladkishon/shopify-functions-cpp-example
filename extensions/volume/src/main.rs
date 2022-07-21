@@ -95,6 +95,7 @@ mod tests {
             ..default_input
         }
     }
+    
     fn input(configuration: Option<input::Configuration>) -> input::Input {
         let input = r#"
         {

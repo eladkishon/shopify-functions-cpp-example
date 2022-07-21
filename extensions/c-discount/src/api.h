@@ -36,7 +36,7 @@ struct CartLine
 
 struct Cart
 {
-    Attribute attribute;
+    std::optional<Attribute> attribute;
     std::vector<CartLine> lines;
     JS_OBJ(attribute, lines);
 };
@@ -145,11 +145,6 @@ public:
 public:
     inline DiscountConfig config()
     {
-        // if discountNode.metafield.value is defined print hello
-        // if (discountNode.metafield.has_value() && discountNode.metafield.value().value.has_value())
-        // {
-
-
         try
         {
             JS::ParseContext context(discountNode.metafield.value().value.value());
@@ -159,8 +154,7 @@ public:
         }
         catch (std::exception &e)
         {
-            std::cout << "Error: " << std::endl;
-            // std::cout << e.what() << std::endl;
+            // std::cout << "Error: " << std::endl;
         }
         return DiscountConfig();
     }
