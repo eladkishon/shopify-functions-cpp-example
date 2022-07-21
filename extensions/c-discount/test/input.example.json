@@ -1,5 +1,4 @@
 {
-    "name": "elad",
     "cart": {
         "id": "elad",
         "attribute": {
@@ -24,7 +23,7 @@
     },
     "discountNode": {
         "metafield": {
-            "value": "elad"
+            "value": "{\"quantity\":100}"
         }
     }
 }

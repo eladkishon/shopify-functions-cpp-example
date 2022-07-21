@@ -4,19 +4,17 @@
 
 FunctionResult function(Input input) {
   FunctionResult result;
+  DiscountConfig discountConfig = input.config();
+  
   // calculate discounts
-  // add discount
 
-  // if cart lines is empty, return result with no discounts and strategy equal first
   if (input.cart.lines.empty()) {
     result.discountApplicationStrategy = DiscountApplicationStrategy::FIRST;
     return result;
   }
 
-  // define empty targets array
   std::vector<Target> targets;
 
-  // for line in cart.lines if line.quantity is greater than 2 add to targets
   for (auto& line : input.cart.lines) {
     if (line.quantity > 2) {
       Target target;
@@ -26,14 +24,12 @@ FunctionResult function(Input input) {
   }
 
 
-  // if targets is empty, return result with no discounts and strategy equal first
   if (targets.empty()) {
     result.discountApplicationStrategy = DiscountApplicationStrategy::FIRST;
     return result;
   }
 
 
-  // return result with a discount containing targets and value equal to percentage of 10
   result.discounts.push_back(Discount{
     Value{std::nullopt, Percentage{10.0}},
     targets,

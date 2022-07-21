@@ -5,6 +5,20 @@ struct Attribute
     JS_OBJ(key, value);
 };
 
+// define Metafield with optional value
+struct Metafield
+{
+    std::optional<std::string> value;
+    JS_OBJ(value);
+};
+
+// define DiscountNode with std::optional metafield
+struct DiscountNode
+{
+    std::optional<Metafield> metafield;
+    JS_OBJ(metafield);
+};
+
 // define Merchandise with optional id string
 struct Merchandise
 {
@@ -25,12 +39,6 @@ struct Cart
     Attribute attribute;
     std::vector<CartLine> lines;
     JS_OBJ(attribute, lines);
-};
-
-struct Input
-{
-    Cart cart;
-    JS_OBJ(cart);
 };
 
 // define FixedAmount with optional applies_to_each_item and value of float
@@ -116,4 +124,44 @@ struct FunctionResult
     std::vector<Discount> discounts;
     DiscountApplicationStrategy discountApplicationStrategy;
     JS_OBJ(discounts, discountApplicationStrategy);
+};
+
+// define DiscountConfig with quantity and percentage
+struct DiscountConfig
+{
+    int quantity;
+    float percentage;
+    JS_OBJ(quantity, percentage);
+};
+
+class Input
+{
+public:
+    Cart cart;
+    DiscountNode discountNode;
+    DiscountConfig discountConfig;
+    JS_OBJ(cart, discountNode);
+    // implement method that parses discountConfig
+public:
+    inline DiscountConfig config()
+    {
+        // if discountNode.metafield.value is defined print hello
+        // if (discountNode.metafield.has_value() && discountNode.metafield.value().value.has_value())
+        // {
+
+
+        try
+        {
+            JS::ParseContext context(discountNode.metafield.value().value.value());
+            DiscountConfig config;
+            context.parseTo(config);
+            return config;
+        }
+        catch (std::exception &e)
+        {
+            std::cout << "Error: " << std::endl;
+            // std::cout << e.what() << std::endl;
+        }
+        return DiscountConfig();
+    }
 };

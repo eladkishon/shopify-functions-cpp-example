@@ -3,7 +3,7 @@ type = "product_discounts"
 api_version = "2022-07"
 
 [build]
-command = "em++ -std=c++1z src/main.cpp -o build/main.js"
+command = "em++ -std=c++1z src/main.cpp -o build/main.wasm"
 path = 'build/main.wasm'
 
 [ui.paths]
