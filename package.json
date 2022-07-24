@@ -1,5 +1,5 @@
 {
-  "name": "rise-functions-api",
+  "name": "@eladkishon/shopify-functions-example",
   "version": "1.0.0",
   "main": "web/index.js",
   "license": "UNLICENSED",
@@ -15,5 +15,5 @@
     "@shopify/app": "3.1.0",
     "@shopify/cli": "3.1.0"
   },
-  "author": "elad kishon"
+  "author": "Elad Kishon"
 }

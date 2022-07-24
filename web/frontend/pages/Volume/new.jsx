@@ -31,7 +31,10 @@ import { data } from '@shopify/app-bridge/actions/Modal'
 const todaysDate = new Date()
 const METAFIELD_NAMESPACE = 'discounts-plus'
 const METAFIELD_CONFIGURATION_KEY = 'volume-config'
-const FUNCTION_ID = '016ed4f2-d123-43fb-b3db-93b49d5f7662'
+const SHOPIFY_VOLUME_ID='1d3160ad-fca1-4fb1-bd5f-87f76da7eeaf'
+const SHOPIFY_C_DISCOUNT_ID='a1bda047-258a-4df9-9b01-1ec50f871425'
+
+const FUNCTION_ID =  SHOPIFY_C_DISCOUNT_ID
 
 const CREATE_AUTOMATIC_MUTATION = gql`
   mutation CreateAutomaticDiscount($discount: DiscountAutomaticAppInput!) {

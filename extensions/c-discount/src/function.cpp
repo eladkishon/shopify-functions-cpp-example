@@ -1,5 +1,3 @@
-#include <iostream>
-#include "json_struct.h"
 #include "api.h"
 
 struct DiscountConfig
@@ -44,24 +42,4 @@ FunctionResult function(Input input) {
   });
 
   return result;
-}
-
-int main()
-{
-  std::string line;
-  std::getline(std::cin, line);
-
-  // parse function input
-  JS::ParseContext context(line);
-  Input input;
-  context.parseTo(input);
-
-  // call function
-  FunctionResult result = function(input);
-
-  // output json result
-  std::string result_json = JS::serializeStruct(result, JS::SerializerOptions(JS::SerializerOptions::Compact));
-  std::cout << result_json << std::endl;
-
-  return 0;
 }
