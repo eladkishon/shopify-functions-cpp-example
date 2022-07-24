@@ -14,8 +14,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 fn function(input: input::Input) -> Result<FunctionResult, Box<dyn std::error::Error>> {
     let config: input::Configuration = input.configuration();
     let cart_lines = input.cart.lines;
-    let rise_attribute = if input.cart.attribute.is_none() { "".to_string() } else { input.cart.attribute.unwrap().value};
-    // println!("HELLO =================== {:?}", rise_attribute);
+    let loyalty_code = if input.cart.attribute.is_none() { "".to_string() } else { input.cart.attribute.unwrap().value};
+
     if cart_lines.is_empty() || config.percentage == 0.0 {
         return Ok(FunctionResult {
             discounts: vec![],
@@ -42,7 +42,7 @@ fn function(input: input::Input) -> Result<FunctionResult, Box<dyn std::error::E
 
     Ok(FunctionResult {
         discounts: vec![Discount {
-            message: Some(rise_attribute),
+            message: Some(loyalty_code),
             conditions: None,
             targets,
             value: Value::Percentage(Percentage { value: config.percentage }),
@@ -60,8 +60,8 @@ mod tests {
         {
             "cart": {
                 "attribute": {
-                    "key": "rise_loyalty_code",
-                    "value": "ELADKING"
+                    "key": "loyalty_code",
+                    "value": "SOME_CODE"
                 },
                 "lines": [
                     {
@@ -194,7 +194,7 @@ mod tests {
         let expected_json = r#"
             {
                 "discounts": [{
-                    "message": "ELADKING",
+                    "message": "SOME_CODE",
                     "targets": [
                         { "productVariant": { "id": "gid://shopify/ProductVariant/0" } }
                     ],

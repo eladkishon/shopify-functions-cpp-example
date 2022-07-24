@@ -3,7 +3,7 @@ type = "product_discounts"
 api_version = "2022-07"
 
 [build]
-command = "em++ -std=c++1z src/main.cpp -o build/main.wasm"
+command = "/usr/local/wasi-sdk-16.0/bin/clang++ -Oz -fno-exceptions -std=c++17 src/main.cpp -o build/main.wasm"
 path = 'build/main.wasm'
 
 [ui.paths]

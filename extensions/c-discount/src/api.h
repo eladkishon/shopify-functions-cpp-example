@@ -1,3 +1,5 @@
+#include "json_struct.h"
+
 struct Attribute
 {
     std::string value;
@@ -126,36 +128,21 @@ struct FunctionResult
     JS_OBJ(discounts, discountApplicationStrategy);
 };
 
-// define DiscountConfig with quantity and percentage
-struct DiscountConfig
-{
-    int quantity;
-    float percentage;
-    JS_OBJ(quantity, percentage);
-};
 
 class Input
 {
 public:
     Cart cart;
     DiscountNode discountNode;
-    DiscountConfig discountConfig;
     JS_OBJ(cart, discountNode);
-    // implement method that parses discountConfig
 public:
-    inline DiscountConfig config()
+    template<typename T> inline T config()
     {
-        try
-        {
-            JS::ParseContext context(discountNode.metafield.value().value.value());
-            DiscountConfig config;
-            context.parseTo(config);
-            return config;
-        }
-        catch (std::exception &e)
-        {
-            // std::cout << "Error: " << std::endl;
-        }
-        return DiscountConfig();
+        JS::ParseContext context(discountNode.metafield.value().value.value());
+        T config;
+        context.parseTo(config);
+        return config;
     }
 };
+
+// FunctionResult function(Input input);

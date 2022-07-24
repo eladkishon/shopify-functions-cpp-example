@@ -1,1 +1,0 @@
-em++ -std=c++1z src/main.cpp -o build/main.js
